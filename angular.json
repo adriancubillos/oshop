@@ -137,5 +137,10 @@
       }
     }
   },
-  "defaultProject": "oshop"
+  "defaultProject": "oshop",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
