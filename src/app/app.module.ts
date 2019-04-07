@@ -18,8 +18,12 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 import { UserService } from './user.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from './category.service';
+import { FormsModule } from '@angular/forms';
+import { ProductService } from './product.service';
+import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
   declarations:
@@ -35,6 +39,7 @@ import { UserService } from './user.service';
       AdminOrdersComponent,
       MyOrdersComponent,
       LoginComponent,
+      ProductFormComponent,
     ],
   imports:
     [
@@ -44,8 +49,10 @@ import { UserService } from './user.service';
       AngularFireDatabaseModule,
       AngularFireAuthModule,
       NgbModule,
+      FormsModule,
+      CustomFormsModule,
     ],
-  providers: [ AuthService, AuthGuard, UserService ],
+  providers: [ AuthService, UserService, CategoryService, ProductService ],
   bootstrap: [ AppComponent ],
 })
 export class AppModule {}
