@@ -17,12 +17,16 @@ export class AppComponent {
     private userSvc: UserService,
   ) {
     authSvc.user$.subscribe(user => {
-      if (user) {
-        userSvc.save(user);
-
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
-        router.navigateByUrl(returnUrl);
+      if (!user) {
+        return;
       }
+      userSvc.save(user);
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+
+      if (!returnUrl) {
+        return;
+      }
+      router.navigateByUrl(returnUrl);
     });
   }
 }
