@@ -43,13 +43,6 @@
   </div>
   <div class="col-md-6">
     <label for="imageUrl">Product preview</label>
-    <div class="card" style="width: 18rem;">
-      <img [src]="product.imageUrl || 'http://placehold.it/350x150&text=Image Placeholder'" class="card-img-top"
-        alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{ product.title }}</h5>
-        <p class="card-text"> {{ product.price | currency:'USD':true }}</p>
-      </div>
-    </div>
+    <app-product-card [product]="product" [show-actions]="false"></app-product-card>
   </div>
 </div>

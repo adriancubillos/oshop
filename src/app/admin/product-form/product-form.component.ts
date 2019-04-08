@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/category.service';
 import { ProductService } from 'src/app/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
-  styleUrls: [ './product-form.component.sass' ],
+  styleUrls: [ './product-form.component.scss' ],
 })
 export class ProductFormComponent implements OnInit {
   categories$;
@@ -20,7 +20,7 @@ export class ProductFormComponent implements OnInit {
     private categorySvc: CategoryService,
     private productSvc: ProductService,
   ) {
-    this.categories$ = categorySvc.getCategories();
+    this.categories$ = categorySvc.getAll();
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {

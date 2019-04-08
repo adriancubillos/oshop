@@ -15,7 +15,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   tableResource: DataTableResource<Product>;
   items: Product[] = [];
-  itemCount: number;
+  itemCount = 0;
+  limits = [ 5, 10, 25, 50, 100 ];
 
   constructor(private productSvc: ProductService) {
     this.subscription = this.productSvc
@@ -30,7 +31,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
   private initializeTable(products: Product[]) {
     this.tableResource = new DataTableResource(products);
-    this.tableResource.query({ offset: 0 }).then(items => (this.items = items));
+    this.tableResource.query({ limit: 10, offset: 0 }).then(items => (this.items = items));
     this.tableResource.count().then(count => (this.itemCount = count));
   }
 
@@ -42,7 +43,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   filter(query: string) {
-    let filteredProducts =
+    const filteredProducts =
       query ? this.products.filter(p => p.title.toLowerCase().includes(query.toLowerCase())) :
       this.products;
 
