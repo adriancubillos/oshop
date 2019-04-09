@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminAuthGuard } from '../admin-auth.guard';
+import { ShoppingCartService } from '../shopping-cart.service';
+import { map } from 'rxjs/operators';
+import { ShoppingCart } from '../models/shopping-cart';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -7,7 +9,11 @@ import { AdminAuthGuard } from '../admin-auth.guard';
   styleUrls: [ './shopping-cart.component.scss' ],
 })
 export class ShoppingCartComponent implements OnInit {
-  constructor(private guardSvc: AdminAuthGuard) {}
+  cart$;
 
-  ngOnInit() {}
+  constructor(private cartSvc: ShoppingCartService) {}
+
+  async ngOnInit() {
+    this.cart$ = (await this.cartSvc.getCart()).pipe(map(x => new ShoppingCart(x.items)));
+  }
 }
