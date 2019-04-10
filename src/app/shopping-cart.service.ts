@@ -4,7 +4,6 @@ import { Product } from './models/product';
 import { take } from 'rxjs/operators';
 import { ShoppingCartItem } from './models/shopping-cart-item';
 import { ShoppingCart } from './models/shopping-cart';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
