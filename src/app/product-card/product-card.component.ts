@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from '../models/product';
 import { ShoppingCartService } from '../shopping-cart.service';
-import { ShoppingCart } from '../models/shopping-cart';
 
 @Component({
   selector: 'app-product-card',
@@ -30,7 +29,7 @@ export class ProductCardComponent {
     if (!this.shoppingCart) {
       return 0;
     }
-    const item = this.shoppingCart.items[this.product.key];
+    const item = this.shoppingCart.itemsMap[this.product.key];
 
     const res =
       item ? item.quantity :

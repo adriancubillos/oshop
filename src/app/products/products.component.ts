@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Product } from '../models/product';
+import { ShoppingCart } from '../models/shopping-cart';
 import { ProductService } from '../product.service';
 import { ShoppingCartService } from '../shopping-cart.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -15,31 +16,38 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   category: string;
-  cart: any;
+  cart: ShoppingCart;
   subscription: Subscription;
 
-  constructor(route: ActivatedRoute, productSvc: ProductService, private cartSvc: ShoppingCartService) {
-    productSvc
+  constructor(
+    private route: ActivatedRoute,
+    private productSvc: ProductService,
+    private cartSvc: ShoppingCartService,
+  ) {}
+
+  async ngOnInit() {
+    this.subscription = (await this.cartSvc.getCart()).subscribe(cart => {
+      let temp: any;
+      temp = cart.payload.child('/items').val();
+      this.cart = new ShoppingCart(temp);
+    });
+
+    this.productSvc
       .getAll()
-      .snapshotChanges()
-      .pipe(map(changes => changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))))
       .pipe(
         switchMap(products => {
-          this.products = products;
-          return route.queryParamMap;
+          let temp: any[];
+          temp = products;
+          this.products = temp;
+          return this.route.queryParamMap;
         }),
       )
       .subscribe(params => {
         this.category = params.get('category');
-
         this.filteredProducts =
           this.category ? this.products.filter(p => p.category === this.category) :
           this.products;
       });
-  }
-
-  async ngOnInit() {
-    this.subscription = (await this.cartSvc.getCart()).subscribe(cart => (this.cart = cart));
   }
 
   ngOnDestroy(): void {

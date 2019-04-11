@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from '../shopping-cart.service';
-import { map } from 'rxjs/operators';
 import { ShoppingCart } from '../models/shopping-cart';
 
 @Component({
@@ -9,11 +8,18 @@ import { ShoppingCart } from '../models/shopping-cart';
   styleUrls: [ './shopping-cart.component.scss' ],
 })
 export class ShoppingCartComponent implements OnInit {
-  cart$;
+  cart: ShoppingCart = new ShoppingCart(null);
+  shoppingCartItemCount: number;
 
   constructor(private cartSvc: ShoppingCartService) {}
 
   async ngOnInit() {
-    this.cart$ = (await this.cartSvc.getCart()).pipe(map(x => new ShoppingCart(x.items)));
+    const cart$ = await this.cartSvc.getCart();
+    cart$.subscribe(temp => {
+      let data: any;
+      data = temp.payload.child('/items').val();
+      this.cart = new ShoppingCart(data);
+      this.shoppingCartItemCount = this.cart.totalItemsCount;
+    });
   }
 }

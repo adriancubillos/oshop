@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProductService } from 'src/app/product.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataTableResource } from 'angular7-data-table';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
-import { map } from 'rxjs/operators';
-import { DataTableResource } from 'angular7-data-table';
+import { ProductService } from 'src/app/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -19,14 +18,18 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   limits = [ 5, 10, 25, 50, 100 ];
 
   constructor(private productSvc: ProductService) {
-    this.subscription = this.productSvc
-      .getAll()
-      .snapshotChanges()
-      .pipe(map(changes => changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))))
-      .subscribe(products => {
-        this.products = products;
-        this.initializeTable(products);
-      });
+    // this.subscription = this.productSvc
+    //   .getAll()
+    //   .subscribe(products => {
+    //     this.products = products;
+    //     this.initializeTable(products);
+    //   });
+
+    this.subscription = this.productSvc.getAll().subscribe(products => {
+      const temp: any[] = products;
+      this.products = temp;
+      this.initializeTable(this.products);
+    });
   }
 
   private initializeTable(products: Product[]) {
