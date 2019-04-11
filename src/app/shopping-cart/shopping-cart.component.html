@@ -6,7 +6,7 @@
       <tr>
         <th>Product</th>
         <th>Quantity</th>
-        <th></th>
+        <th>Price</th>
       </tr>
     </thead>
     <tbody>
@@ -15,10 +15,20 @@
           {{ item.product.title }}
         </td>
         <td>
-          {{ item.quantity }}
+          <app-product-quantity [product]="item.product" [shopping-cart]="cart">{{ item.quantity }}
+          </app-product-quantity>
         </td>
-        <td></td>
+        <td>
+          {{ item.totalPrice | currency:'USD':'symbol':'1.2-2' }}
+        </td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th> {{ cart.totalPrice | currency:'USD':'symbol':'1.2-2' }}</th>
+      </tr>
+    </tfoot>
   </table>
 </ng-container>
