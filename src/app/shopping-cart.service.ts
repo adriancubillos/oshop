@@ -10,19 +10,28 @@ import { ShoppingCartItem } from './models/shopping-cart-item';
 export class ShoppingCartService {
   constructor(private db: AngularFireDatabase) {}
 
+  async getCart() {
+    const cartId = await this.getOrCreateCartId();
+    return this.db.object('/shopping-carts/' + cartId).snapshotChanges();
+  }
+
+  async addToCart(product: Product) {
+    this.updateItem(product, 1);
+  }
+
+  async removeFromCart(product: Product) {
+    this.updateItem(product, -1);
+  }
+
   private create() {
     return this.db.list('/shopping-carts').push({
       dateCreated: new Date().getTime(),
     });
   }
 
-  // async getCart() {
-  //   return (await this.getCartInternal()).valueChanges();
-  // }
-
-  async getCart() {
+  async clearCart() {
     const cartId = await this.getOrCreateCartId();
-    return this.db.object('/shopping-carts/' + cartId).snapshotChanges();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
   }
 
   private getItem(cartId: string, productId: string) {
@@ -41,20 +50,23 @@ export class ShoppingCartService {
     return result.key;
   }
 
-  async addToCart(product: Product) {
-    this.updateItemQuantity(product, 1);
-  }
-
-  async removeFromCart(product: Product) {
-    this.updateItemQuantity(product, -1);
-  }
-
-  private async updateItemQuantity(product: Product, change: number) {
+  private async updateItem(product: Product, change: number) {
     const cartId = await this.getOrCreateCartId();
     const item$ = this.getItem(cartId, product.key);
 
     item$.snapshotChanges().pipe(take(1)).subscribe(item => {
-      item$.update({ product, quantity: ((item.payload.val() && item.payload.val().quantity) || 0) + change });
+      const quantity = ((item.payload.val() && item.payload.val().quantity) || 0) + change;
+      if (quantity === 0) {
+        item$.remove();
+      } else {
+        item$.update({
+          title: product.title,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          key: product.key,
+          quantity,
+        });
+      }
     });
   }
 }

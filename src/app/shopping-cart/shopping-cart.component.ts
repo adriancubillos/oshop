@@ -22,4 +22,8 @@ export class ShoppingCartComponent implements OnInit {
       this.shoppingCartItemCount = this.cart.totalItemsCount;
     });
   }
+
+  clearCart() {
+    this.cartSvc.clearCart();
+  }
 }

@@ -10,7 +10,7 @@ export class ShoppingCart {
     for (const productId in itemsMap) {
       if (itemsMap.hasOwnProperty(productId)) {
         const item = itemsMap[productId];
-        this.items.push(new ShoppingCartItem(item.product, item.quantity));
+        this.items.push(new ShoppingCartItem({ ...item }));
       }
     }
   }
