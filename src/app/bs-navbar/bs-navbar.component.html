@@ -6,13 +6,15 @@
     </button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
       <div *ngIf="appUser">
+        <a class="dropdown-item" routerLink="/shopping-cart">Shopping Cart <span class="badge badge-warning pill">
+            {{ shoppingCartItemCount }}
+          </span></a>
         <a class="dropdown-item" routerLink="/my/orders">My orders</a>
         <a class="dropdown-item" routerLink="/admin/orders">Manage orders</a>
         <a class="dropdown-item" routerLink="/admin/products">Manage Products</a>
         <a class="dropdown-item" (click)="logout()">Log Out</a>
       </div>
       <div *ngIf="!(appUser)">
-        <a class="dropdown-item" routerLink="/shopping-cart">Shopping Cart</a>
         <a class="dropdown-item" routerLink="/login">Login</a>
       </div>
     </div>

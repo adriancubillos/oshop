@@ -26,12 +26,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
+    // Could not change this subscription for unwrap. broke many things.
     this.subscription = (await this.cartSvc.getCart()).subscribe(cart => {
       let temp: any;
       temp = cart.payload.child('/items').val();
       this.cart = new ShoppingCart(temp);
     });
 
+    this.populateProducts();
+  }
+
+  private populateProducts() {
     this.productSvc
       .getAll()
       .pipe(
@@ -44,10 +49,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
       )
       .subscribe(params => {
         this.category = params.get('category');
-        this.filteredProducts =
-          this.category ? this.products.filter(p => p.category === this.category) :
-          this.products;
+        this.applyFilter();
       });
+  }
+
+  private applyFilter() {
+    this.filteredProducts =
+      this.category ? this.products.filter(p => p.category === this.category) :
+      this.products;
   }
 
   ngOnDestroy(): void {
