@@ -7,11 +7,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from 'angular7-data-table';
 import { CustomFormsModule } from 'ng2-validation';
+import { SharedModule } from 'shared/shared.module';
 import { environment } from 'src/environments/environment';
 
-import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
-import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -25,7 +23,7 @@ import { ProductsComponent } from './products/products.component';
 import { ShippingFormComponent } from './shipping-form/shipping-form.component';
 import { ShoppingCartSummaryComponent } from './shopping-cart-summary/shopping-cart-summary.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { SharedModule } from 'shared/shared.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations:
@@ -37,11 +35,10 @@ import { SharedModule } from 'shared/shared.module';
       ShoppingCartComponent,
       CheckOutComponent,
       OrderSuccessComponent,
-      AdminProductsComponent,
-      AdminOrdersComponent,
+
       MyOrdersComponent,
       LoginComponent,
-      ProductFormComponent,
+
       ProductFilterComponent,
 
       ShoppingCartSummaryComponent,
@@ -52,6 +49,7 @@ import { SharedModule } from 'shared/shared.module';
       BrowserModule,
       SharedModule,
       AppRoutingModule,
+      AdminModule,
       AngularFireModule.initializeApp(environment.firebase),
       AngularFireDatabaseModule,
       AngularFireAuthModule,
