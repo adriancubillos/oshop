@@ -17,12 +17,7 @@ export class ShoppingCart {
 
   getQuantity(product: Product) {
     const item = this.itemsMap[product.key];
-
-    const res =
-      item ? item.quantity :
-      0;
-
-    return res;
+    return item ? item.quantity : 0;
   }
 
   get totalPrice() {
