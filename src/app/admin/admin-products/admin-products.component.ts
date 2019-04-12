@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataTableResource } from 'angular7-data-table';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/product.service';
+import { Product } from 'shared/models/product';
+import { ProductService } from 'shared/services/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -46,9 +46,9 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   filter(query: string) {
-    const filteredProducts =
-      query ? this.products.filter(p => p.title.toLowerCase().includes(query.toLowerCase())) :
-      this.products;
+    const filteredProducts = query
+      ? this.products.filter(p => p.title.toLowerCase().includes(query.toLowerCase()))
+      : this.products;
 
     this.initializeTable(filteredProducts);
   }

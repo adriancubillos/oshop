@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { AppUser } from './models/app-user';
-import { UserService } from './user.service';
+import { AppUser } from 'shared/models/app-user';
+import { UserService } from 'shared/services/user.service';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
