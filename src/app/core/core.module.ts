@@ -6,10 +6,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CoreRoutingModule } from './core-routing-module';
+import { SharedModule } from 'shared/shared.module';
 
 @NgModule({
   declarations: [ BsNavbarComponent, HomeComponent, LoginComponent ],
-  imports: [ CommonModule, NgbModule, CoreRoutingModule ],
+  imports: [ SharedModule, CoreRoutingModule ],
   exports: [ BsNavbarComponent ],
 })
 export class CoreModule {}

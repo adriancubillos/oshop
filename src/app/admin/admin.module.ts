@@ -11,6 +11,6 @@ import { AdminRoutingModule } from './admin-routing-module';
 
 @NgModule({
   declarations: [ ProductFormComponent, AdminProductsComponent, AdminOrdersComponent ],
-  imports: [ CommonModule, AdminRoutingModule, FormsModule, SharedModule, DataTableModule ],
+  imports: [ SharedModule, AdminRoutingModule ],
 })
 export class AdminModule {}

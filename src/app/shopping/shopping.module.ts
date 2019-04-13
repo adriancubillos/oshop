@@ -25,6 +25,6 @@ import { SharedModule } from 'shared/shared.module';
       ShippingFormComponent,
       ProductFilterComponent,
     ],
-  imports: [ SharedModule, CommonModule, FormsModule, ShoppingRoutingModule ],
+  imports: [ SharedModule, ShoppingRoutingModule ],
 })
 export class ShoppingModule {}
